@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php-app
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: formulario_contacto
+      DB_USER: postgres
+      DB_PASS: K3ll00GGs
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:18
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_DB: formulario_contacto
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: K3ll00GGs
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
